@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from mongoengine import connect
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -72,17 +73,13 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Magneto_Networkork_Site.wsgi.application'
 
 
-# rellenar el campo name, username y password con sus correspondientes credenciales
-DATABASES = {
-    'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'nombre_base_datos', 
-        'HOST': 'localhost',
-        'USERNAME': 'user_name',
-        'PASSWORD': 'password',
-        'PORT': 27017,
-    }
+MONGODB_SETTINGS = {
+    'db': 'nombre_de_la_base_de_datos',
+    'host': 'localhost',  # O la URL de la base de datos MongoDB
+    'port': 27017
 }
+
+connect(**MONGODB_SETTINGS)
 
 
 # Password validation
