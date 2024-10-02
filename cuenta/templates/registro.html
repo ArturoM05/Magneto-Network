@@ -1,0 +1,11 @@
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="nombre" placeholder="Nombre" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="text" name="phone_number" placeholder="Phone number" required>
+    <input type="date" name="birthdate" placeholder="Birthdate" required>
+    <input type="text" name="description" placeholder="A little description of you" required>
+    <input type="password" name="password" placeholder="Contraseña" required>
+    <button type="submit">Registrar</button>
+  </form>
+  
