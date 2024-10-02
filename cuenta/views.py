@@ -35,7 +35,12 @@ def login_usuario(request):
             usuario = Usuario.objects.get(email=email)
             # Verificar la contraseña
             if check_password(password, usuario.password):
-                # Autenticación exitosa
+                ip = request.META.get('REMOTE_ADDR')
+                if 'HTTP_X_FORWARDED_FOR' in request.META:
+                    ip = request.META['HTTP_X_FORWARDED_FOR'].split(',')[0]
+                
+                usuario.ultima_ip = ip
+                usuario.save()
                 messages.success(request, 'Inicio de sesión exitoso.')
                 return redirect('home')
             else:
@@ -46,5 +51,14 @@ def login_usuario(request):
     return render(request, 'login.html')
 
 
+
 def home_algorithm(request):
-    return render(request, 'home.html')
+    # Obtener la IP del usuario actual
+    ip_actual = request.META.get('REMOTE_ADDR')
+    if 'HTTP_X_FORWARDED_FOR' in request.META:
+        ip_actual = request.META['HTTP_X_FORWARDED_FOR'].split(',')[0]
+
+    # Buscar el usuario con la última IP igual a la IP actual
+    usuario_por_ip = Usuario.objects(ultima_ip=ip_actual).first()
+    print(usuario_por_ip.nombre)
+    return render(request, 'home.html', {'usuario': usuario_por_ip})
