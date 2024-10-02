@@ -10,3 +10,4 @@ class Usuario(Document):
     password = StringField(required=True)
     sesion = StringField(required=True)
     fecha_creacion = DateTimeField(default=datetime.datetime.now)
+    ultima_ip = StringField()
