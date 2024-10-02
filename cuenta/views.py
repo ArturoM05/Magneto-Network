@@ -22,6 +22,7 @@ def registrar_usuario(request):
             usuario = Usuario(nombre=nombre, email=email, password=hashed_password, birthdate=birthdate, phone_number=pn, description=description, sesion = 'Activate')
             usuario.save()
             messages.success(request, 'Usuario registrado exitosamente.')
+            print("AAAAA")
             return redirect('login')
 
     return render(request, 'registro.html')
