@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    padding: 10px;
+}
+
+form {
+    display: flex;
+    align-items: center;
+}
+
+.post-input {
+    width: 300px;
+    padding: 5px;
+}
+
+button {
+    padding: 5px 10px;
+    margin-left: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.username {
+    margin-right: 20px;
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.posts-section {
+    width: 70%;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.post {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.post p {
+    margin: 5px 0;
+}
+
+.like-count {
+    margin-left: 10px;
+}
+
+.options-section {
+    width: 25%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.option {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #ddd;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
