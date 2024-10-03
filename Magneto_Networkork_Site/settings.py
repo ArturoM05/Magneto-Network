@@ -1,5 +1,5 @@
 from pathlib import Path
-from mongoengine import connect
+#from mongoengine import connect
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_mongoengine',
     # Agrega tu aplicación aquí
     'cuenta.apps.CuentaConfig',  
     'publicacion.apps.PublicacionConfig', 
@@ -34,7 +35,8 @@ MIDDLEWARE = [
 
 
 ROOT_URLCONF = 'Magneto_Networkork_Site.urls'
-
+SESSION_ENGINE = 'django_mongoengine.sessions'
+SESSION_SERIALIZER = 'django_mongoengine.sessions.BSONSerializer'
 
 TEMPLATES = [
     {
@@ -55,13 +57,22 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Magneto_Networkork_Site.wsgi.application'
 
 # Conexión a MongoDB usando MongoEngine
-connect(
+"""connect(
     db='DBmagneto_network',
     username='afmurgueya',
     password='ite3HW32dPbruUIF',
     host='mongodb+srv://afmurgueya:ite3HW32dPbruUIF@cluster0.peoft3k.mongodb.net/DBmagneto_network?retryWrites=true&w=majority'
-)
+)"""
 
+MONGODB_DATABASES = {
+    "default": {
+        "name": 'DBmagneto_network',
+        "host": 'mongodb+srv://afmurgueya:ite3HW32dPbruUIF@cluster0.peoft3k.mongodb.net/DBmagneto_network?retryWrites=true&w=majority',
+        "password": 'ite3HW32dPbruUIF',
+        "username": 'afmurgueya',
+        "tz_aware": True, # if you using timezones in django (USE_TZ = True)
+    },
+}
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {

@@ -19,7 +19,7 @@ def registrar_usuario(request):
             messages.error(request, 'El email ya está registrado.')
         else:
             hashed_password = make_password(password)
-            usuario = Usuario(nombre=nombre, email=email, password=hashed_password, birthdate=birthdate, phone_number=pn, description=description, sesion = 'Activate')
+            usuario = Usuario(nombre=nombre, email=email, password=hashed_password, birthdate=birthdate, phone_number=pn, description=description)
             usuario.save()
             messages.success(request, 'Usuario registrado exitosamente.')
             return redirect('login')
@@ -35,13 +35,8 @@ def login_usuario(request):
             usuario = Usuario.objects.get(email=email)
             # Verificar la contraseña
             if check_password(password, usuario.password):
-                ip = request.META.get('REMOTE_ADDR')
-                if 'HTTP_X_FORWARDED_FOR' in request.META:
-                    ip = request.META['HTTP_X_FORWARDED_FOR'].split(',')[0]
-                
-                usuario.ultima_ip = ip
-                usuario.save()
                 messages.success(request, 'Inicio de sesión exitoso.')
+                request.session['usuario_id'] = str(usuario.id)
                 return redirect('home1')
             else:
                 messages.error(request, 'Contraseña incorrecta.')

@@ -3,15 +3,10 @@ from cuenta.models import Usuario
 from .models import Publicacion
 from django.contrib import messages
 
-def get_user(request):
-    ip_actual = request.META.get('REMOTE_ADDR')
-    if 'HTTP_X_FORWARDED_FOR' in request.META:
-        ip_actual = request.META['HTTP_X_FORWARDED_FOR'].split(',')[0]
-    # Buscar el usuario con la última IP igual a la IP actual
-    return Usuario.objects(ultima_ip=ip_actual).first()
 
 def home_algorithm(request):
-    user = get_user(request)
+    usuario_id = request.session.get('usuario_id')
+    user = Usuario.objects(id=usuario_id).first()
     if request.method == 'POST':
         if 'post_content' in request.POST:
             post_content = request.POST.get('post_content')
