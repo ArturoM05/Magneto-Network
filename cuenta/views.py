@@ -22,7 +22,6 @@ def registrar_usuario(request):
             usuario = Usuario(nombre=nombre, email=email, password=hashed_password, birthdate=birthdate, phone_number=pn, description=description, sesion = 'Activate')
             usuario.save()
             messages.success(request, 'Usuario registrado exitosamente.')
-            print("AAAAA")
             return redirect('login')
 
     return render(request, 'registro.html')
@@ -61,5 +60,9 @@ def home_algorithm(request):
 
     # Buscar el usuario con la última IP igual a la IP actual
     usuario_por_ip = Usuario.objects(ultima_ip=ip_actual).first()
-    print(usuario_por_ip.nombre)
-    return render(request, 'home.html', {'usuario': usuario_por_ip})
+    if usuario_por_ip:
+        return render(request, 'home.html', {'usuario': usuario_por_ip})
+    else:
+        messages.error(request, 'tienes que iniciar sesion primero')
+        return render(request, 'login.html')
+        
