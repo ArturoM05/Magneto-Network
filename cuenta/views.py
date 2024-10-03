@@ -42,7 +42,7 @@ def login_usuario(request):
                 usuario.ultima_ip = ip
                 usuario.save()
                 messages.success(request, 'Inicio de sesión exitoso.')
-                return redirect('home')
+                return redirect('home1')
             else:
                 messages.error(request, 'Contraseña incorrecta.')
         except Usuario.DoesNotExist:
@@ -52,17 +52,4 @@ def login_usuario(request):
 
 
 
-def home_algorithm(request):
-    # Obtener la IP del usuario actual
-    ip_actual = request.META.get('REMOTE_ADDR')
-    if 'HTTP_X_FORWARDED_FOR' in request.META:
-        ip_actual = request.META['HTTP_X_FORWARDED_FOR'].split(',')[0]
-
-    # Buscar el usuario con la última IP igual a la IP actual
-    usuario_por_ip = Usuario.objects(ultima_ip=ip_actual).first()
-    if usuario_por_ip:
-        return render(request, 'home.html', {'usuario': usuario_por_ip})
-    else:
-        messages.error(request, 'tienes que iniciar sesion primero')
-        return render(request, 'login.html')
         
