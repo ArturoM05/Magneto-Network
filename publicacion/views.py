@@ -1,6 +1,7 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from cuenta.models import Usuario
 from .models import Publicacion
+from django.contrib import messages
 
 def get_user(request):
     ip_actual = request.META.get('REMOTE_ADDR')
@@ -22,8 +23,10 @@ def home_algorithm(request):
             publicacion.likes += 1
             publicacion.save()
     publicaciones = list(Publicacion.objects())
-    print(user.nombre)
-    return render(request, 'home1.html', {'usuario': user, 'publicaciones': publicaciones})
-
-
+    if user:
+        print(user.nombre)
+        return render(request, 'home1.html', {'usuario': user, 'publicaciones': publicaciones})
+    else:
+        messages.error(request, 'tienes que iniciar sesion primero')
+        return render(request, 'login.html')
 

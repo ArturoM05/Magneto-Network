@@ -22,7 +22,6 @@ def registrar_usuario(request):
             usuario = Usuario(nombre=nombre, email=email, password=hashed_password, birthdate=birthdate, phone_number=pn, description=description, sesion = 'Activate')
             usuario.save()
             messages.success(request, 'Usuario registrado exitosamente.')
-            print("AAAAA")
             return redirect('login')
 
     return render(request, 'registro.html')
@@ -43,7 +42,7 @@ def login_usuario(request):
                 usuario.ultima_ip = ip
                 usuario.save()
                 messages.success(request, 'Inicio de sesión exitoso.')
-                return redirect('home')
+                return redirect('home1')
             else:
                 messages.error(request, 'Contraseña incorrecta.')
         except Usuario.DoesNotExist:
@@ -53,13 +52,4 @@ def login_usuario(request):
 
 
 
-def home_algorithm(request):
-    # Obtener la IP del usuario actual
-    ip_actual = request.META.get('REMOTE_ADDR')
-    if 'HTTP_X_FORWARDED_FOR' in request.META:
-        ip_actual = request.META['HTTP_X_FORWARDED_FOR'].split(',')[0]
-
-    # Buscar el usuario con la última IP igual a la IP actual
-    usuario_por_ip = Usuario.objects(ultima_ip=ip_actual).first()
-    print(usuario_por_ip.nombre)
-    return render(request, 'home.html', {'usuario': usuario_por_ip})
+        
