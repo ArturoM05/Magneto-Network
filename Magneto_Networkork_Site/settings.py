@@ -1,7 +1,7 @@
 from pathlib import Path
-#from mongoengine import connect
+from dotenv import load_dotenv
 import os
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security settings
@@ -56,18 +56,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Magneto_Networkork_Site.wsgi.application'
 
-# Conexión a MongoDB usando MongoEngine
-"""connect(
-    db='DBmagneto_network',
-    username='afmurgueya',
-    password='ite3HW32dPbruUIF',
-    host='mongodb+srv://afmurgueya:ite3HW32dPbruUIF@cluster0.peoft3k.mongodb.net/DBmagneto_network?retryWrites=true&w=majority'
-)"""
+load_dotenv()
+mongo_uri = os.getenv('MONGO_URI')
 
 MONGODB_DATABASES = {
     "default": {
         "name": 'DBmagneto_network',
-        "host": 'mongodb+srv://afmurgueya:ite3HW32dPbruUIF@cluster0.peoft3k.mongodb.net/DBmagneto_network?retryWrites=true&w=majority',
+        "host": mongo_uri,
         "password": 'ite3HW32dPbruUIF',
         "username": 'afmurgueya',
         "tz_aware": True, # if you using timezones in django (USE_TZ = True)
