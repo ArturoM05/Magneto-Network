@@ -8,6 +8,4 @@ class Usuario(Document):
     birthdate = DateTimeField(default=datetime.datetime.now)
     description = StringField(required=True)
     password = StringField(required=True)
-    sesion = StringField(required=True)
     fecha_creacion = DateTimeField(default=datetime.datetime.now)
-    ultima_ip = StringField()
