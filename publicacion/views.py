@@ -12,6 +12,7 @@ def home_algorithm(request):
             post_content = request.POST.get('post_content')
             publicacion = Publicacion(user=user.nombre,text=post_content, likes=0)
             publicacion.save()
+            messages.info(request, 'tu post se ha publicado')
         if 'like_post' in request.POST:
             post_id = request.POST.get('like_post')
             publicacion = Publicacion.objects(id=post_id).first()

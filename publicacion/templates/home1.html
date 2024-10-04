@@ -1,20 +1,33 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Principal</title>
     {% load static %} 
-    <link rel="stylesheet" type="text/css" href="{% static '/styles/home1.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/home1.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
 </head>
 <body>
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+            {% if forloop.last %}
+                <div class="alert {{message.tag}}">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
     <div class="top-bar">
         <form method="POST">
             {% csrf_token %}
             <input type="text" name="post_content" placeholder="Publicar" class="post-input" required>
             <button type="submit">Publicar</button>
         </form>
-        <span class="username">{{usuario.nombre}}</span>
-    </div>
+        <div class="username">{{usuario.nombre}}</div>
+    </div>  
 
     <div class="main-content">
         <div class="posts-section">
@@ -24,8 +37,8 @@
                 <p>{{publicacion.text}}</p>
                 <form method="POST">
                 {% csrf_token %}
-                <button type="submit" name="like_post" value="{{ publicacion.id }}">Like</button><span class="like-count">{{publicacion.likes}}</span>
-                <button>Comentar</button>
+                <button type="submit" name="like_post" value="{{ publicacion.id }}">Like</button><span class="like-count">{{publicacion.likes}} likes</span>
+                <button type="submit" >Comentar</button>
             </div>
         {% endfor %}
         </div>
@@ -35,5 +48,17 @@
             <div class="option">Grupos de Interés</div>
         </div>
     </div>
+    <script>
+        window.setTimeout(function() {
+            var alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                alert.style.animation = "fadeOut 1s ease-in-out forwards";
+                setTimeout(function() {
+                    alert.remove();
+                }, 1000); 
+            });
+        }, 1000); 
+    </script>
 </body>
 </html>
+

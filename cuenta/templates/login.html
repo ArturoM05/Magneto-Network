@@ -1,6 +1,17 @@
-<form method="POST">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página de Registro</title>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
+  <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+</head>
+<body>
+  <img src="{% static 'images/logo.png' %}" alt="Logotipo">
+  <form method="POST">
     {% csrf_token %}
     <input type="email" name="email" placeholder="Email" required>
     <input type="password" name="password" placeholder="Contraseña" required>
     <button type="submit">Iniciar Sesión</button>
   </form>
+</body>
