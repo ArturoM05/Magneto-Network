@@ -32,23 +32,46 @@
     <div class="main-content">
         <div class="posts-section">
         {% for publicacion in publicaciones %}
-            <div class="publicacion">
+            <div class="publicacion" id="post-{{ publicacion.id }}">
                 <p><strong>{{publicacion.user}}</strong></p>
+                <p>publicado  el {{publicacion.fecha_creacion}}</p>
                 <p>{{publicacion.text}}</p>
-                <form method="POST">
-                {% csrf_token %}
-                <button type="submit" name="like_post" value="{{ publicacion.id }}">Like</button><span class="like-count">{{publicacion.likes}} likes</span>
-                <button type="submit" >Comentar</button>
+                <button class="like-button" data-post-id="{{ publicacion.id }}">Like</button><span class="like-count">{{publicacion.likes}} likes</span>
+                <button class="comment-button"type="button">Comentar</button>
             </div>
         {% endfor %}
         </div>
-
         <div class="options-section">
             <div class="option">Chat</div>
             <div class="option">Grupos de Interés</div>
         </div>
     </div>
     <script>
+        document.querySelectorAll('.like-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const postId = this.getAttribute('data-post-id');
+
+                fetch('{% url "like_post" %}', { 
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({ post_id: postId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const likeCount = this.nextElementSibling;
+                        likeCount.textContent = `${data.likes} likes`; // Actualiza el conteo de likes
+                    } else {
+                        console.error(data.error);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+
         window.setTimeout(function() {
             var alerts = document.querySelectorAll('.alert');
             alerts.forEach(function(alert) {
@@ -61,4 +84,3 @@
     </script>
 </body>
 </html>
-
