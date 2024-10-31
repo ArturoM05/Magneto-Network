@@ -15,8 +15,24 @@
     <input type="text" name="phone_number" placeholder="Phone number" required>
     <input type="date" name="birthdate" placeholder="Birthdate" required>
     <input type="text" name="description" placeholder="A little description of you" required>
+    <button type="button" id="abrirModal">Selecciona tus areas de interes</button>
     <input type="password" name="password" placeholder="Contraseña" required>
     <button type="submit">Registrar</button>
     <p>¿Ya tienes cuenta? <a href="{% url 'login' %}">Incia sesión aquí</a></p>
   </form>
+    <!-- Modal -->
+    <div id="miModal" class="modal" style="display: none;">
+      <div class="modal-contenido">
+          <span class="cerrar">&times;</span>
+          <h2>Áreas de Interés</h2>
+          <form method="POST">
+              <label for="interes1">Interés 1:</label>
+              <input type="checkbox" id="interes1" name="interes1" value="opcion1"><br>
+              <label for="interes2">Interés 2:</label>
+              <input type="checkbox" id="interes2" name="interes2" value="opcion2"><br>
+              <input type="submit" value="Guardar Selección">
+          </form>
+      </div>
+  </div>
+  <script src="{% static 'js/register.js' %}"></script>
 </body> 
