@@ -4,17 +4,18 @@ from .models import AreaInteres
 from cuenta.models import Usuario
 
 def add_area_interes(request):
-    """    usuario_id = Usuario.request.session.get('usuario_id') 
-        usuario = Usuario.objects(id=usuario_id).first()
-        if request.method == 'POST':
-            if "area_interes_list" in request.POST:
-                areas_interes_id = list(request.POST.get("area_interes_list"))
-                for area_id in areas_interes_id:
-                    area_interes = AreaInteres.objects(id=area_id).first()
-                    usuario.areas_interes.append(area_interes)
-                usuario.save()
-    """
-    pass
+    if request.method == 'POST':
+        nombre_area = request.POST.get('nombre_area', None)
+        if nombre_area:
+            usuarios = Usuario.objects.count()
+            popularity = (1/(usuarios+1))*100
+
+            area = AreaInteres(nombre=nombre_area,interested=1,popularity=popularity)
+            area.save()
+            return JsonResponse({'success': True, 'message': 'Área guardada correctamente', 'area_id': str(area.id)})
+        else:
+            return JsonResponse({'success': False, 'message': 'No se recibió el nombre del área de interés'})
+    return JsonResponse({'success': False, 'message': 'Método no permitido'})
 
 def delete_area_interes(request):
     pass
@@ -23,13 +24,12 @@ def delete_area_interes(request):
 def show_area_interes(request):
     usuario_id = request.session.get('usuario_id')
     usuario = Usuario.objects(id=usuario_id).first()
-    areas_interes = [{'id': '3t123131','nombre': 'Deporte'},  {'id': '9123t213dfgf','nombre': 'Cocina'},{'id': '3fsd323131','nombre': 'Deporte'},  {'id': '9123t213eqwfgf','nombre': 'Cocina'},  {'id': '3t1','nombre': 'Deporte'},  {'id': '912dfgf','nombre': 'Cocina'}, {'id': '1','nombre': 'Deporte'},  {'id': '2f','nombre': 'Cocina'}]
+    areas_interes = []
     
     if usuario:
         areas_interes.extend(usuario.areas_interes)
     
-    areas_populares = AreaInteres.objects(popularity__gt=60)
+    areas_populares = AreaInteres.objects(popularity__gt=30)
     areas_interes.extend(areas_populares)
-    # areas_interes_serializadas = [{'id': str(area.id), 'nombre': area.nombre} for area in areas_interes]
-    areas_interes_serializadas = areas_interes
+    areas_interes_serializadas = [{'id': str(area.id), 'nombre': area.nombre} for area in areas_interes]
     return JsonResponse({'areas_interes': areas_interes_serializadas})

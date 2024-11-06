@@ -3,6 +3,7 @@ console.log("dbisdvad")
 var modal = document.getElementById("miModal");
 var btnAbrir = document.getElementById("abrirModal");
 var spanCerrar = document.getElementsByClassName("cerrar")[0];
+const guardarSeleccionBtn = document.querySelector('input[type="button"]');
 
 // Al hacer clic en el botón, abre el modal
 btnAbrir.onclick = function() {
@@ -13,6 +14,7 @@ btnAbrir.onclick = function() {
 spanCerrar.onclick = function() {
     modal.style.display = "none";
 }
+
 
 // Al hacer clic fuera del contenido del modal, cierra el modal
 window.onclick = function(event) {
@@ -63,4 +65,46 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         })
         .catch(error => console.error('Error al cargar áreas de interés:', error));
+});
+
+document.getElementById('miModal').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const nombreArea = document.getElementById('areaInteresInput').value;
+
+    fetch('/area_interes/add/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded', 
+            'X-CSRFToken': getCookie('csrftoken') 
+        },
+        body: `nombre_area=${nombreArea}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Área de interés guardada correctamente');
+            // Opcionalmente, actualizar el DOM o cerrar el modal
+            document.getElementById('miModal').style.display = 'none';
+        }
+    })
+});
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+guardarSeleccionBtn.addEventListener('click', function(event) {
+    modal.style.display = 'none';
 });

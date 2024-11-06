@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Usuario
+from area_interes.models import AreaInteres
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password, check_password
 from datetime import datetime
@@ -17,9 +18,17 @@ def registrar_usuario(request):
         
         if Usuario.objects(email=email):
             messages.error(request, 'El email ya está registrado.')
-        else:
+        else:     
             hashed_password = make_password(password)
             usuario = Usuario(nombre=nombre, email=email, password=hashed_password, birthdate=birthdate, phone_number=pn, description=description)
+            usuario.save()
+            areas_interes_id = request.POST.get('areas_seleccionadas').split(",")
+            for area_id in areas_interes_id:
+                area = AreaInteres.objects(id=area_id).first()
+                area.interested += 1
+                area.update_popularity()
+                usuario.areas_interes.append(area)
+                area.save()
             usuario.save()
             messages.success(request, 'Usuario registrado exitosamente.')
             return redirect('login')
