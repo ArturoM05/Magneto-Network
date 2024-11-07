@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Usuario
 from area_interes.models import AreaInteres
 from django.contrib import messages
+from django.contrib.auth import logout
 from django.contrib.auth.hashers import make_password, check_password
 from datetime import datetime
 
@@ -48,12 +49,15 @@ def login_usuario(request):
                 request.session['usuario_id'] = str(usuario.id)
                 return redirect('home1')
             else:
+                print('Contraseña incorrecta.')
                 messages.error(request, 'Contraseña incorrecta.')
         except Usuario.DoesNotExist:
             messages.error(request, 'El usuario no existe.')
 
     return render(request, 'login.html')
 
-
+def logout_usuario(request):
+    logout(request)
+    return redirect('login')
 
         

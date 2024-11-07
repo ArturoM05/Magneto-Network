@@ -26,14 +26,15 @@
             <input type="text" name="post_content" placeholder="Publicar" class="post-input" required>
             <button type="submit">Publicar</button>
         </form>
-        <div class="username">{{usuario.nombre}}</div>
+        
+        <div class="username"><p><strong><a href="{% url 'user_profile' usuario.id %}">{{ usuario.nombre }}</a></strong></p></div>
     </div>  
-
+    <div><a href="{% url 'logout'%}">cerrar sesion</a></div>
     <div class="main-content">
         <div class="posts-section">
         {% for publicacion in publicaciones %}
             <div class="publicacion" id="post-{{ publicacion.id }}">
-                <p><strong>{{publicacion.user}}</strong></p>
+                <p><strong><a href="{% url 'user_profile' publicacion.user.id %}">{{ publicacion.user.nombre }}</a></strong></p>
                 <p>publicado  el {{publicacion.fecha_creacion}}</p>
                 <p>{{publicacion.text}}</p>
                 <button class="like-button" data-post-id="{{ publicacion.id }}">Like</button><span class="like-count">{{publicacion.likes}} likes</span>
@@ -42,8 +43,8 @@
         {% endfor %}
         </div>
         <div class="options-section">
-            <div class="option">Chat</div>
-            <div class="option">Grupos de Interés</div>
+            <div class="option">Explorar nuevos grupos</div>
+            <div class="option">Mis grupos de interés</div>
         </div>
     </div>
     <script>

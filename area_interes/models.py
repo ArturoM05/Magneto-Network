@@ -8,4 +8,4 @@ class AreaInteres(Document):
 
     def update_popularity(self):
         users_count = Usuario.objects().count()
-        self.popularity = self.interested/users_count
+        self.popularity = (self.interested/users_count)*100
