@@ -22,4 +22,5 @@ urlpatterns = [
     path('', include('cuenta.urls')),
     path('', include('publicacion.urls')),
     path('area_interes/', include('area_interes.urls', namespace='area_interes')),
+     path('grupo_interes/', include('grupo_interes.urls', namespace='grupo_interes')),
 ]

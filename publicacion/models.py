@@ -5,4 +5,5 @@ class Publicacion(Document):
     user = ReferenceField('Usuario')
     text = StringField(required=True)
     likes = IntField(min_value=0)
+    group = ReferenceField('GrupoInteres')
     fecha_creacion = DateTimeField(default=datetime.datetime.now)
