@@ -10,9 +10,9 @@
     transition: background-color 0.3s ease;
   }
   
-.button-style:hover {
+  .button-style:hover {
     background-color: #0056b3;
-}  
+  }  
 
 /* Estilos generales */
 body {
@@ -59,6 +59,21 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
+}
+
+button[type="button"] {
+    background-color: #28a745; /* Azul brillante */
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold; /* Texto más visible */
+}
+
+button[type="button"]:hover {
+    background-color: #218838; /* Azul más oscuro al pasar el mouse */
 }
 
 /* Mensajes de alerta */
@@ -181,4 +196,97 @@ button[type="submit"]:hover {
     .post-input {
         width: 100%;
     }
+}
+/* Estilos para el modal */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscurecido */
+}
+
+/* Contenedor del contenido del modal */
+.modal-contenido {
+    background-color: white;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Ancho del modal */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Botón de cerrar */
+.cerrar {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.cerrar:hover,
+.cerrar:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilo de la lista de áreas de interés con scroll */
+#areasInteresList {
+    list-style-type: none; /* Sin viñetas */
+    padding: 1; /* Sin padding */
+    margin: 0; /* Sin margen */
+    max-height: 200px; /* Altura máxima de la lista */
+    overflow-y: auto; /* Permitir desplazamiento vertical si hay muchos elementos */
+    border: 1px solid #ccc; /* Añadir un borde para darle un aspecto definido */
+}
+
+#areasInteresList li {
+    background-color: #f0f0f0; /* Fondo gris claro */
+    padding: 0.8rem; /* Espaciado interno */
+    margin-bottom: 0.5rem; /* Espaciado entre elementos */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar cursor al pasar el mouse */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
+    font-size: 1rem; /* Tamaño de fuente */
+    text-align: center; /* Centrado del texto */
+    color: #333; /* Color de texto gris oscuro */
+}
+
+/* Estilo de hover para los elementos de la lista */
+#areasInteresList li:hover {
+    background-color: #007BFF; /* Color azul al pasar el mouse */
+    color: white; /* Texto blanco */
+}
+
+/* Estilo de los elementos seleccionados */
+#areasInteresList li.selected {
+    background-color: #28a745; /* Color verde para elementos seleccionados */
+    color: white; /* Texto blanco */
+}
+
+/* Estilo del contenedor de selección de áreas */
+#areasSeleccionadasDisplay {
+    font-weight: bold; /* Texto en negrita */
+    color: #007BFF; /* Azul para resaltar las áreas seleccionadas */
+    display: block;
+    margin-top: 1rem;
+    text-align: center; /* Centrado del texto */
+}
+
+form input[type="button"] {
+    background-color: #28a745; /* Verde brillante */
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+form input[type="button"]:hover {
+    background-color: #218838; /* Verde más oscuro */
 }

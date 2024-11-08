@@ -10,14 +10,12 @@
     <div>
         <div class="username"><p>{{user.nombre}}</p></div>
         <div class="description"><p>{{user.description}}</p></div>
-        <p><a href="{% url 'home1' %}" class="button-style">Home</a></p>
+        <p class="button-home"><a href="{% url 'home1' %}" class="button-style">Home</a></p>
         <div class="area_interes">
-            <h2>Mis áreas de interés</h2>
+            <h2>nos interesa: </h2>
             {% for area in user.areas_interes%}
                 <p>{{area.nombre}}</p>
             {% endfor %}
-            <button type="button" id="abrirModal">añade nuevos</button>
-            <input type="hidden" name="areas_seleccionadas" id="areasSeleccionadas">
         </div>
     </div>
     <div class="main-content">
@@ -33,22 +31,30 @@
         {% endfor %}
         </div>
     </div>
-    <!-- Modal -->
-    <div id="miModal" class="modal" style="display: none;">
-        <div class="modal-contenido">
-            <span class="cerrar">&times;</span>
-            <h2>Áreas de Interés</h2>
-            <form>
-                <input type="text" id="areaInteresInput" name="nombre_area" placeholder="Escribe tu propia area de interes">
-                <button type="submit">agregar</button>
-                <p>Áreas comunes: </p>
-                <ul id="areasInteresList">
-                  <!-- Las áreas de interés se añadirán aquí dinámicamente -->
-                </ul>
-                <p>Áreas de interés seleccionadas: <span id="areasSeleccionadasDisplay">Ninguna</span></p>
-                <input type="button"  value="Guardar Selección"></input>
-            </form>
-        </div>
-    </div>
-    <script src="{% static 'js/own_profile.js' %}"></script>
+    <script>
+        document.querySelectorAll('.like-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const postId = this.getAttribute('data-post-id');
+
+                fetch('{% url "like_post" %}', { 
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({ post_id: postId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const likeCount = this.nextElementSibling;
+                        likeCount.textContent = `${data.likes} likes`; // Actualiza el conteo de likes
+                    } else {
+                        console.error(data.error);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>
 </body>

@@ -56,15 +56,5 @@
                 .catch(error => console.error('Error:', error));
             });
         });
-
-        window.setTimeout(function() {
-            var alerts = document.querySelectorAll('.alert');
-            alerts.forEach(function(alert) {
-                alert.style.animation = "fadeOut 1s ease-in-out forwards";
-                setTimeout(function() {
-                    alert.remove();
-                }, 1000); 
-            });
-        }, 1000); 
     </script>
 </body>

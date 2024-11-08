@@ -13,74 +13,59 @@
   .button-style:hover {
     background-color: #0056b3;
   }  
-  
-/* Estilos generales */
-body {
+img {
+    display: block;
+    width: 30%;
+    height: 30%;
+    margin: auto;
+    object-fit: contain;
+}
+
+
+
+body{
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    background-color: #a88cd0; /* Color de fondo suave */
+    box-sizing: border-box; 
+    background-color: #a88cd0; 
     color: #333;
 }
 
-a {
-    text-decoration: none;
-    color: #007BFF;
+
+/* Estilos del formulario */
+form {
+    background-color: #ffffff; /* Fondo blanco para el formulario */
+    padding: 2rem; /* Espaciado interno */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    max-width: 400px; /* Ancho máximo del formulario */
+    margin: 0rem auto; /* Centrado horizontal y margen vertical */
 }
 
-a:hover {
-    color: #0056b3;
+/* Estilos para los inputs */
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="password"] {
+    border: 1px solid #ccc; /* Borde gris claro */
+    padding: 0.5rem; /* Espaciado interno */
+    width: 100%; /* Ancho completo */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 1rem; /* Tamaño de fuente */
+    margin-bottom: 1rem; /* Espaciado entre campos */
+    transition: border-color 0.3s; /* Transición para el cambio de color del borde */
 }
 
-/* Estilos del usuario */
-.username {
-    color: #fff;
-    background-color: #5a2d82; /* Fondo púrpura oscuro */
-    padding: 1rem;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: bold;
+/* Estilo de enfoque en inputs */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="date"]:focus,
+input[type="password"]:focus {
+    border-color: #007BFF; /* Color azul brillante al enfocar */
+    outline: none; /* Sin contorno */
 }
 
-.description {
-    color: #fff;
-    background-color: #c46fb0; /* Fondo rosa suave */
-    padding: 0.5rem;
-    text-align: center;
-    font-size: 1rem;
-    margin-bottom: 1rem;
-}
-
-/* Contenido principal */
-.main-content {
-    display: flex;
-    max-width: 1000px;
-    margin: 2rem auto;
-    gap: 2rem;
-}
-
-.posts-section {
-    flex: 3;
-}
-
-/* Estilos de las publicaciones */
-.publicacion {
-    background-color: #fff;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.publicacion p {
-    margin: 0.5rem 0;
-}
-
-.publicacion p:nth-of-type(2) {
-    color: #888;
-    font-size: 0.9rem;
-}
 /* Estilos del botón de enviar */
 button[type="submit"] {
     background-color: #007BFF; /* Azul brillante */
@@ -90,46 +75,31 @@ button[type="submit"] {
     border-radius: 5px; /* Bordes redondeados */
     cursor: pointer; /* Cambiar cursor al pasar el mouse */
     transition: background-color 0.3s; /* Transición para el color de fondo */
-    width: 10%; /* Ancho completo */
+    width: 100%; /* Ancho completo */
     font-weight: bold; /* Texto más visible */
+}
+
+button[type="button"] {
+    background-color: #28a745; /* Azul brillante */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    padding: 0.5rem 1rem; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar cursor al pasar el mouse */
+    transition: background-color 0.3s; /* Transición para el color de fondo */
+    width: 100%; /* Ancho completo */
+    font-weight: bold; /* Texto más visible */
+    margin-bottom: 1rem;
+}
+
+/* Efecto hover para el botón */
+button[type="button"]:hover {
+    background-color: #218838; /* Azul más oscuro al pasar el mouse */
 }
 
 /* Efecto hover para el botón */
 button[type="submit"]:hover {
     background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
-}
-
-input[type="text"]{
-    border: 1px solid #ccc; /* Borde gris claro */
-    padding: 0.5rem; /* Espaciado interno */
-    width: 70%; /* Ancho completo */
-    border-radius: 5px; /* Bordes redondeados */
-    font-size: 1rem; /* Tamaño de fuente */
-    margin-bottom: 0; /* Espaciado entre campos */
-    transition: border-color 0.3s; /* Transición para el cambio de color del borde */
-}
-/* Botones */
-button.like-button,
-button.comment-button {
-    background-color: #007BFF; /* Azul brillante */
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-weight: bold;
-}
-
-button.like-button:hover,
-button.comment-button:hover {
-    background-color: #0056b3; /* Azul más oscuro */
-}
-
-.like-count {
-    margin-left: 0.5rem;
-    margin-right: 2rem; 
-    color: #444;
 }
 
 /* Estilos para el modal */
@@ -223,21 +193,4 @@ form input[type="button"] {
 
 form input[type="button"]:hover {
     background-color: #218838; /* Verde más oscuro */
-}
-
-/* Animaciones */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-/* Responsividad */
-@media only screen and (max-width: 768px) {
-    .main-content {
-        flex-direction: column;
-    }
-
-    .modal-contenido {
-        width: 90%;
-    }
 }

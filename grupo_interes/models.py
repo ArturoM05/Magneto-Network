@@ -3,7 +3,7 @@ from cuenta.models import Usuario
 
 class GrupoInteres(Document):
     nombre = StringField(max_length=255, required=True)
-    descrption = StringField(max_length=999, required=True)
+    description = StringField(max_length=999, required=True)
     areas_interes = ListField(ReferenceField('AreaInteres'))
     members = ListField(ReferenceField('Usuario'))
     popularity = IntField(min_value=0)
