@@ -22,7 +22,8 @@ INSTALLED_APPS = [
     # Agrega tu aplicación aquí
     'cuenta.apps.CuentaConfig',  
     'publicacion.apps.PublicacionConfig', 
-    'area_interes.apps.AreaInteresConfig'
+    'area_interes.apps.AreaInteresConfig',
+    'grupo_interes.apps.GrupoInteresConfig',
 ]
 
 MIDDLEWARE = [

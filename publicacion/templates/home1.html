@@ -29,7 +29,7 @@
         
         <div class="username"><p><strong><a href="{% url 'user_profile' usuario.id %}">{{ usuario.nombre }}</a></strong></p></div>
     </div>  
-    <div><a href="{% url 'logout'%}">cerrar sesion</a></div>
+    <div><a href="{% url 'logout'%}" class="button-style">cerrar sesion</a></div>
     <div class="main-content">
         <div class="posts-section">
         {% for publicacion in publicaciones %}
@@ -43,8 +43,8 @@
         {% endfor %}
         </div>
         <div class="options-section">
-            <div class="option">Explorar nuevos grupos</div>
-            <div class="option">Mis grupos de interés</div>
+            <div class="option"><a href="/grupo_interes/show_new/">nuevos grupos</a> </div>
+            <div class="option"><a href="/grupo_interes/feed/">Mis grupos de interés</a></div>
         </div>
     </div>
     <script>
