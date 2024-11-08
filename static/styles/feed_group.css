@@ -235,7 +235,7 @@ button[type="button"]:hover {
 }
 
 /* Estilo de la lista de áreas de interés con scroll */
-#areasInteresList {
+#groupsInteresList {
     list-style-type: none; /* Sin viñetas */
     padding: 1; /* Sin padding */
     margin: 0; /* Sin margen */
@@ -244,7 +244,7 @@ button[type="button"]:hover {
     border: 1px solid #ccc; /* Añadir un borde para darle un aspecto definido */
 }
 
-#areasInteresList li {
+#groupsInteresList li {
     background-color: #f0f0f0; /* Fondo gris claro */
     padding: 0.8rem; /* Espaciado interno */
     margin-bottom: 0.5rem; /* Espaciado entre elementos */
@@ -257,19 +257,19 @@ button[type="button"]:hover {
 }
 
 /* Estilo de hover para los elementos de la lista */
-#areasInteresList li:hover {
+#groupsInteresListli:hover {
     background-color: #007BFF; /* Color azul al pasar el mouse */
     color: white; /* Texto blanco */
 }
 
 /* Estilo de los elementos seleccionados */
-#areasInteresList li.selected {
+#groupsInteresList li.selected {
     background-color: #28a745; /* Color verde para elementos seleccionados */
     color: white; /* Texto blanco */
 }
 
 /* Estilo del contenedor de selección de áreas */
-#areasSeleccionadasDisplay {
+#groupsInteresListDisplay {
     font-weight: bold; /* Texto en negrita */
     color: #007BFF; /* Azul para resaltar las áreas seleccionadas */
     display: block;

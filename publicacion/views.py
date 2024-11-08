@@ -38,6 +38,8 @@ def like_post(request):
 
     return JsonResponse({'success': False, 'error': 'Invalid request'}, status=400)
 
+def comment_post(request):
+    pass
 
 def user_profile(request, id):
     user = Usuario.objects(id=id).first()
