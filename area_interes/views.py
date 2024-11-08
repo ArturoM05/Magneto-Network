@@ -11,8 +11,7 @@ def add_area_interes(request):
             popularity = (1/(usuarios+1))*100
 
             area = AreaInteres(nombre=nombre_area,interested=1,popularity=popularity)
-            area.save()
-            
+            area.save()   
             return redirect('/area_interes/show')
         else:
             return JsonResponse({'success': False, 'message': 'No se recibió el nombre del área de interés'})
@@ -24,7 +23,14 @@ def delete_area_interes(request):
 
 def show_area_interes(request):
     areas_interes = []
+    usuario_id = request.session.get('usuario_id')
+    user = Usuario.objects(id=usuario_id).first()        
     areas_populares = AreaInteres.objects(popularity__gt=0)
-    areas_interes.extend(areas_populares)
+    if user:
+        for area in areas_populares:
+            if not area in user.areas_interes:
+                areas_interes.append(area)
+    else:
+        areas_interes.extend(areas_populares)     
     areas_interes_serializadas = [{'id': str(area.id), 'nombre': area.nombre} for area in areas_interes]
     return JsonResponse({'areas_interes': areas_interes_serializadas})

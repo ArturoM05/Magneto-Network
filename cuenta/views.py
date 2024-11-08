@@ -40,24 +40,31 @@ def login_usuario(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
-        
+
+        if request.session.get('usuario_id'):
+            print('entro')
+            logout(request)
+            
         try:
             usuario = Usuario.objects.get(email=email)
             # Verificar la contraseña
             if check_password(password, usuario.password):
                 messages.success(request, 'Inicio de sesión exitoso.')
                 request.session['usuario_id'] = str(usuario.id)
+                print('Inicio de sesión exitoso.')
                 return redirect('home1')
             else:
                 print('Contraseña incorrecta.')
                 messages.error(request, 'Contraseña incorrecta.')
         except Usuario.DoesNotExist:
+            print('El usuario no existe.')
             messages.error(request, 'El usuario no existe.')
-
+    print('que putas')
     return render(request, 'login.html')
 
 def logout_usuario(request):
     logout(request)
+    request.session.flush()
     return redirect('login')
 
         

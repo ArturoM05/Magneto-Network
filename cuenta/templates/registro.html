@@ -12,9 +12,9 @@
     {% csrf_token %}
     <input type="text" name="nombre" placeholder="Nombre" required>
     <input type="email" name="email" placeholder="Email" required>
-    <input type="text" name="phone_number" placeholder="Phone number" required>
-    <input type="date" name="birthdate" placeholder="Birthdate" required>
-    <input type="text" name="description" placeholder="A little description of you" required>
+    <input type="text" name="phone_number" placeholder="Numero de celular" required>
+    <input type="date" name="birthdate" placeholder="fecha de nacimiento" required>
+    <input type="text" name="description" placeholder="describete en pocas palabras" required>
     <button type="button" id="abrirModal">Selecciona tus areas de interes</button>
     <input type="hidden" name="areas_seleccionadas" id="areasSeleccionadas">
     <p>Áreas de interés seleccionadas: <span id="areasSeleccionadasDisplay">Ninguna</span></p>

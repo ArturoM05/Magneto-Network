@@ -38,7 +38,11 @@ def like_post(request):
 
     return JsonResponse({'success': False, 'error': 'Invalid request'}, status=400)
 
+
 def user_profile(request, id):
     user = Usuario.objects(id=id).first()
     publicaciones = list(Publicacion.objects(user=user))
-    return render(request, 'profile.html',{'user': user, 'posts': publicaciones})
+    current_user_id = request.session.get('usuario_id')
+    if current_user_id == id:
+        return render(request, 'own_profile.html',{'user': user, 'posts': publicaciones})
+    return render (request, 'profile.html',{'user': user, 'posts': publicaciones})
