@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import Usuario
+from area_interes.models import AreaInteres
 from django.contrib import messages
+from django.contrib.auth import logout
 from django.contrib.auth.hashers import make_password, check_password
 from datetime import datetime
 
@@ -17,9 +19,17 @@ def registrar_usuario(request):
         
         if Usuario.objects(email=email):
             messages.error(request, 'El email ya está registrado.')
-        else:
+        else:     
             hashed_password = make_password(password)
             usuario = Usuario(nombre=nombre, email=email, password=hashed_password, birthdate=birthdate, phone_number=pn, description=description)
+            usuario.save()
+            areas_interes_id = request.POST.get('areas_seleccionadas').split(",")
+            for area_id in areas_interes_id:
+                area = AreaInteres.objects(id=area_id).first()
+                area.interested += 1
+                area.update_popularity()
+                usuario.areas_interes.append(area)
+                area.save()
             usuario.save()
             messages.success(request, 'Usuario registrado exitosamente.')
             return redirect('login')
@@ -30,21 +40,31 @@ def login_usuario(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
-        
+
+        if request.session.get('usuario_id'):
+            print('entro')
+            logout(request)
+            
         try:
             usuario = Usuario.objects.get(email=email)
             # Verificar la contraseña
             if check_password(password, usuario.password):
                 messages.success(request, 'Inicio de sesión exitoso.')
                 request.session['usuario_id'] = str(usuario.id)
+                print('Inicio de sesión exitoso.')
                 return redirect('home1')
             else:
+                print('Contraseña incorrecta.')
                 messages.error(request, 'Contraseña incorrecta.')
         except Usuario.DoesNotExist:
+            print('El usuario no existe.')
             messages.error(request, 'El usuario no existe.')
-
+    print('que putas')
     return render(request, 'login.html')
 
-
+def logout_usuario(request):
+    logout(request)
+    request.session.flush()
+    return redirect('login')
 
         

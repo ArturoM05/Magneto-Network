@@ -12,11 +12,31 @@
     {% csrf_token %}
     <input type="text" name="nombre" placeholder="Nombre" required>
     <input type="email" name="email" placeholder="Email" required>
-    <input type="text" name="phone_number" placeholder="Phone number" required>
-    <input type="date" name="birthdate" placeholder="Birthdate" required>
-    <input type="text" name="description" placeholder="A little description of you" required>
+    <input type="text" name="phone_number" placeholder="Numero de celular" required>
+    <input type="date" name="birthdate" placeholder="fecha de nacimiento" required>
+    <input type="text" name="description" placeholder="describete en pocas palabras" required>
+    <button type="button" id="abrirModal">Selecciona tus areas de interes</button>
+    <input type="hidden" name="areas_seleccionadas" id="areasSeleccionadas">
+    <p>Áreas de interés seleccionadas: <span id="areasSeleccionadasDisplay">Ninguna</span></p>
     <input type="password" name="password" placeholder="Contraseña" required>
     <button type="submit">Registrar</button>
     <p>¿Ya tienes cuenta? <a href="{% url 'login' %}">Incia sesión aquí</a></p>
   </form>
+    <!-- Modal -->
+    <div id="miModal" class="modal" style="display: none;">
+      <div class="modal-contenido">
+          <span class="cerrar">&times;</span>
+          <h2>Áreas de Interés</h2>
+          <form>
+              <input type="text" id="areaInteresInput" name="nombre_area" placeholder="Escribe tu propia area de interes">
+              <button type="submit">agregar</button>
+              <p>Áreas comunes</p>
+              <ul id="areasInteresList">
+                <!-- Las áreas de interés se añadirán aquí dinámicamente -->
+              </ul>
+              <input type="button"  value="Guardar Selección"></input>
+          </form>
+      </div>
+    </div>
+  <script src="{% static 'js/register.js' %}"></script>
 </body> 

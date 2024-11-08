@@ -12,7 +12,7 @@ def home_algorithm(request):
     if request.method == 'POST':
         if 'post_content' in request.POST:
             post_content = request.POST.get('post_content')
-            publicacion = Publicacion(user=user.nombre,text=post_content, likes=0)
+            publicacion = Publicacion(user=user,text=post_content, likes=0)
             publicacion.save()
             messages.info(request, 'tu post se ha publicado')
     publicaciones = list(Publicacion.objects())
@@ -38,3 +38,11 @@ def like_post(request):
 
     return JsonResponse({'success': False, 'error': 'Invalid request'}, status=400)
 
+
+def user_profile(request, id):
+    user = Usuario.objects(id=id).first()
+    publicaciones = list(Publicacion.objects(user=user))
+    current_user_id = request.session.get('usuario_id')
+    if current_user_id == id:
+        return render(request, 'own_profile.html',{'user': user, 'posts': publicaciones})
+    return render (request, 'profile.html',{'user': user, 'posts': publicaciones})

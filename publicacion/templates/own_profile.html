@@ -1,0 +1,54 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de usuario</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/profile.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+</head>
+<body>
+    <div>
+        <div class="username"><p>{{user.nombre}}</p></div>
+        <div class="description"><p>{{user.description}}</p></div>
+        <button class="button-home"><a href="{% url 'home1' %}">Home</a></button>
+        <div class="area_interes">
+            <h2>Mis áreas de interés</h2>
+            {% for area in user.areas_interes%}
+                <p>{{area.nombre}}</p>
+            {% endfor %}
+            <button type="button" id="abrirModal">añade nuevos</button>
+            <input type="hidden" name="areas_seleccionadas" id="areasSeleccionadas">
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="posts-section">
+        {% for publicacion in posts %}
+            <div class="publicacion" id="post-{{ publicacion.id }}">
+                <p><strong><a href="{% url 'user_profile' publicacion.user.id %}">{{ publicacion.user.nombre }}</a></strong></p>
+                <p>publicado  el {{publicacion.fecha_creacion}}</p>
+                <p>{{publicacion.text}}</p>
+                <button class="like-button" data-post-id="{{ publicacion.id }}">Like</button><span class="like-count">{{publicacion.likes}} likes</span>
+                <button class="comment-button"type="button">Comentar</button>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    <!-- Modal -->
+    <div id="miModal" class="modal" style="display: none;">
+        <div class="modal-contenido">
+            <span class="cerrar">&times;</span>
+            <h2>Áreas de Interés</h2>
+            <form>
+                <input type="text" id="areaInteresInput" name="nombre_area" placeholder="Escribe tu propia area de interes">
+                <button type="submit">agregar</button>
+                <p>Áreas comunes: </p>
+                <ul id="areasInteresList">
+                  <!-- Las áreas de interés se añadirán aquí dinámicamente -->
+                </ul>
+                <p>Áreas de interés seleccionadas: <span id="areasSeleccionadasDisplay">Ninguna</span></p>
+                <input type="button"  value="Guardar Selección"></input>
+            </form>
+        </div>
+    </div>
+    <script src="{% static 'js/own_profile.js' %}"></script>
+</body>

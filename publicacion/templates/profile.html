@@ -1,38 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Principal</title>
-    {% load static %} 
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/home1.css' %}">
+    <title>Perfil de usuario</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/profile.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
 </head>
 <body>
-    {% if messages %}
     <div>
-        {% for message in messages %}
-            {% if forloop.last %}
-                <div class="alert {{message.tag}}">
-                    {{ message }}
-                </div>
-            {% endif %}
-        {% endfor %}
+        <div class="username"><p>{{user.nombre}}</p></div>
+        <div class="description"><p>{{user.description}}</p></div>
+        <p class="button-home"><a href="{% url 'home1' %}">Home</a></p>
+        <div class="area_interes">
+            <h2>A {{user.nombre}} le interesa: </h2>
+            {% for area in user.areas_interes%}
+                <p>{{area.nombre}}</p>
+            {% endfor %}
+        </div>
     </div>
-    {% endif %}
-    <div class="top-bar">
-        <form method="POST">
-            {% csrf_token %}
-            <input type="text" name="post_content" placeholder="Publicar" class="post-input" required>
-            <button type="submit">Publicar</button>
-        </form>
-        
-        <div class="username"><p><strong><a href="{% url 'user_profile' usuario.id %}">{{ usuario.nombre }}</a></strong></p></div>
-    </div>  
-    <div><a href="{% url 'logout'%}">cerrar sesion</a></div>
     <div class="main-content">
         <div class="posts-section">
-        {% for publicacion in publicaciones %}
+        {% for publicacion in posts %}
             <div class="publicacion" id="post-{{ publicacion.id }}">
                 <p><strong><a href="{% url 'user_profile' publicacion.user.id %}">{{ publicacion.user.nombre }}</a></strong></p>
                 <p>publicado  el {{publicacion.fecha_creacion}}</p>
@@ -41,10 +29,6 @@
                 <button class="comment-button"type="button">Comentar</button>
             </div>
         {% endfor %}
-        </div>
-        <div class="options-section">
-            <div class="option">Explorar nuevos grupos</div>
-            <div class="option">Mis grupos de interés</div>
         </div>
     </div>
     <script>
@@ -84,4 +68,3 @@
         }, 1000); 
     </script>
 </body>
-</html>

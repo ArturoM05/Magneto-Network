@@ -1,4 +1,4 @@
-from mongoengine import Document, StringField, EmailField, DateTimeField
+from mongoengine import Document, StringField, EmailField, DateTimeField, ListField, ReferenceField
 import datetime
 
 class Usuario(Document):
@@ -9,3 +9,4 @@ class Usuario(Document):
     description = StringField(required=True)
     password = StringField(required=True)
     fecha_creacion = DateTimeField(default=datetime.datetime.now)
+    areas_interes = ListField(ReferenceField('AreaInteres'))
