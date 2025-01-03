@@ -5,12 +5,31 @@ from .models import GrupoInteres
 from django.shortcuts import render, redirect
 from .models import Usuario
 from area_interes.models import AreaInteres
-from datetime import datetime
+
 # exxplore grupo interes
 
 def show_new_grupo_interes(request):
-    return render(request, 'explore_groups.html', {'message': 'Por hacer'})
-
+    usuario_id = request.session.get('usuario_id')
+    user = Usuario.objects(id=usuario_id).first()
+    user_groups = GrupoInteres.objects(members=user)
+    grupos = GrupoInteres.objects()
+    grupos_membersInt = []
+    for grupo in grupos:
+        grupo_membersInt = {
+            'id': grupo.id,
+            'nombre' : grupo.nombre,
+            'description': grupo.description,
+            'areas_interes' : grupo.areas_interes,
+            'members' : grupo.count_members(),
+            'popularity' : grupo.popularity,
+            'fecha_creacion' :grupo.fecha_creacion
+        }
+        grupos_membersInt.append(grupo_membersInt)
+    if user:
+        return render(request, 'explore_groups.html', {'usuario': user, 'publicaciones': grupos_membersInt, 'grupos': user_groups})
+    else:
+        return render(request, 'login.html')
+    
 def create_grupo_interes(request):
     usuario_id = request.session.get('usuario_id')
     user = Usuario.objects(id=usuario_id).first()
@@ -32,11 +51,23 @@ def create_grupo_interes(request):
                 grupo.areas_interes.append(area)
                 area.save()
             grupo.save()
-            return redirect('feed')
+            return redirect(f'/grupo_interes/profile/{grupo.id}')
     return render(request, 'create_group.html')
 
-def join_grupo_interes(request):
-    pass
+def join_grupo_interes(request, grupo_interes_id):
+    usuario_id = request.session.get('usuario_id')
+    user = Usuario.objects(id=usuario_id).first()
+    group = GrupoInteres.objects(id=grupo_interes_id).first()
+    if user in group.members:
+        print("ya estas en el grupo ")
+        return redirect(f'/grupo_interes/profile/{grupo_interes_id}')
+    else:
+        group.members.append(user)
+        group.update_popularity()
+        group.save ()
+        print("ingreso con exito")
+        return redirect(f'/grupo_interes/profile/{grupo_interes_id}')
+
 
 #  view current user grupos de interess
 

@@ -1,11 +1,32 @@
+</html>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hola Mundo</title>
+    <title>Página Principal</title>
+    {% load static %} 
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/explore_groups.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
 </head>
-<body>
-    <h1>{{ message }}</h1> 
+    <div class="top-bar">
+        <div class="username"><p><strong><a href="{% url 'user_profile' usuario.id %}">{{ usuario.nombre }}</a></strong></p></div>
+    </div> 
+    <p><a href="/grupo_interes/create/" class="button-style">crea un nuevo grupo</a></p> 
+    <p><a href="{% url 'home1' %}" class="button-style">Home</a></p>
+    <div class="main-content">
+        <div class="posts-section">
+        {% for publicacion in publicaciones %}
+            <div class="publicacion" id="post-{{ publicacion.id }}">
+                <p><a href="{% url 'grupo_interes:grupo_interes_profile' publicacion.id %}">{{ publicacion.nombre}}</a></p>
+                <p>creado el {{publicacion.fecha_creacion}}</p>
+                <p>con {{publicacion.members}} miembros</p>
+                <p>{{publicacion.description}}</p>
+                <p><a href="{% url 'grupo_interes:join_grupo_interes' publicacion.id %}" class="button-style">unete a nuestro grupo</a></p> 
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+
 </body>
 </html>
