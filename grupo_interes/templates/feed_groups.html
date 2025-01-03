@@ -32,6 +32,9 @@
                 <button class="comment-button"type="button">Comentar</button>
             </div>
         {% endfor %}
+        {% if not user_groups%}
+            <p><a href="/grupo_interes/show_new/" class="button-style">explora grupos que puedan interesarte</a></p> 
+        {% endif %}
         </div>
     </div>
     <div id="miModal" class="modal" style="display: none;">
